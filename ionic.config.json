@@ -1,0 +1,8 @@
+{
+  "name": "weather app ",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react-vite",
+  "id": "5f0b9f49"
+}
