@@ -1,0 +1,49 @@
+/* HomePage.css */
+
+/* Style for the IonContent */
+ion-content {
+  background-color: #f8f8f8; /* Set the background color to a light gray */
+  text-align: center;
+}
+
+/* Style for the IonHeader */
+ion-header {
+  --ion-background-color: #25455b; /* Set the header background color to a standard blue color */
+}
+
+/* Style for the IonTitle in IonToolbar */
+ion-title {
+  color: #ecf0f1; /* Set the text color to a light color */
+}
+
+/* Style for the main h1 title */
+ion-content ion-padding h1 {
+  font-size: 2rem; /* Set the font size to your preference */
+  color: #333333; /* Set the text color to a dark color */
+  text-align: center; /* Center the text */
+  margin-bottom: 20px; /* Add some margin at the bottom of the title */
+}
+
+/* Style for the weather images */
+.weather-image {
+  width: 100px; /* Set the width of the images */
+  height: auto; /* Maintain the image aspect ratio */
+  border-radius: 8px; /* Add a border-radius for a slightly rounded look */
+  margin: 10px; /* Add some margin around the images */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add a subtle box shadow */
+}
+
+/* Style for the IonRouterLink */
+ion-router-link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none; /* Remove the default underline style */
+  color: #3498db; /* Set the link color to a standard blue color */
+  margin-bottom: 10px; /* Add some margin at the bottom of each link */
+}
+
+/* Style for IonRouterLink on hover */
+ion-router-link:hover {
+  color: #2980b9; /* Change the link color on hover */
+}

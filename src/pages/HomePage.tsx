@@ -7,29 +7,32 @@ import {
   IonToolbar,
 } from "@ionic/react";
 import ExploreContainer from "../components/ExploreContainer";
-import "./Tab1.css";
+import "./HomePage.css";
 import React from "react";
 
-const Tab1: React.FC = () => {
+const HomePage: React.FC = () => {
   return (
     <IonPage>
       <IonHeader>
-        <IonToolbar>
-          <IonTitle></IonTitle>
-        </IonToolbar>
+        {" "}
+        <h1>Too Hot To Handle</h1>{" "}
       </IonHeader>
       <IonContent className="ion-padding">
         <h1>Too Hot To Handle</h1>
 
-        <IonRouterLink href="/tab2">
+        <IonRouterLink href="/Bern">
           <img
             src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/Sweden_flag_orb_icon.svg/1200px-Sweden_flag_orb_icon.svg.png"
             alt="Image 1"
             className="weather-image"
           />
         </IonRouterLink>
-        <IonRouterLink href="/tab3">
-          <img src="israel.png" alt="Image 2" className="weather-image" />
+        <IonRouterLink href="/TelAviv">
+          <img
+            src="icions\israel.png"
+            alt="Image 2"
+            className="weather-image"
+          />
         </IonRouterLink>
         <IonRouterLink href="/tab4">
           <img
@@ -39,17 +42,21 @@ const Tab1: React.FC = () => {
           />
         </IonRouterLink>
         <IonRouterLink href="/tab5">
-          <img src="italy.png" alt="Image 4" className="weather-image" />
+          <img src="icions\italy.png" alt="Image 4" className="weather-image" />
         </IonRouterLink>
         <IonRouterLink href="/tab6">
-          <img src="netherlands.png" alt="Image 5" className="weather-image" />
+          <img
+            src="icions\netherlands.png"
+            alt="Image 5"
+            className="weather-image"
+          />
         </IonRouterLink>
-        <IonRouterLink href="/tab7">
-          <img src="petach tikva.png" alt="Image 5" className="weather-image" />
+        <IonRouterLink href="/AddTab">
+          <img src="icions\loupe.png" alt="Image 5" className="weather-image" />
         </IonRouterLink>
       </IonContent>
     </IonPage>
   );
 };
 
-export default Tab1;
+export default HomePage;

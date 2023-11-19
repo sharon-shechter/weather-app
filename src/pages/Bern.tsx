@@ -10,17 +10,16 @@ import {
 import ExploreContainer from "../components/ExploreContainer";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import "./Tab2.css";
+import "./Wether.css";
 import { IonButton } from "@ionic/react";
 
-const Tab2: React.FC = () => {
+const Bern: React.FC = () => {
   const [weatherData, setWeatherData] = useState<any>(null);
 
   useEffect(() => {
     // Replace 'YOUR_API_KEY' with your actual API key
     const apiKey = "5ad3dc179a0f4a6c89c111130231311";
-    const apiUrl =
-      "http://api.weatherapi.com/v1/current.json?key=5ad3dc179a0f4a6c89c111130231311&q=tel aviv&aqi=no";
+    const apiUrl = `http://api.weatherapi.com/v1/current.json?key=5ad3dc179a0f4a6c89c111130231311&q=bern&aqi=no`;
 
     axios
       .get(apiUrl)
@@ -45,7 +44,6 @@ const Tab2: React.FC = () => {
             <IonTitle size="large">Tab 2</IonTitle>
           </IonToolbar>
         </IonHeader>
-        <ExploreContainer name="Tel-aviv" />
         {weatherData && (
           <div>
             <h2>Weather Information for {weatherData.location.name}</h2>
@@ -66,4 +64,4 @@ const Tab2: React.FC = () => {
   );
 };
 
-export default Tab2;
+export default Bern;

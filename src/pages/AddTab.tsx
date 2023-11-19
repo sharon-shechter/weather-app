@@ -1,25 +1,29 @@
-// Tab2.tsx
+// AddTab.tsx
 
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import {
   IonContent,
   IonHeader,
   IonPage,
   IonTitle,
   IonToolbar,
+  IonInput,
+  IonButton,
+  IonToggle,
+  IonLabel,
 } from "@ionic/react";
-import ExploreContainer from "../components/ExploreContainer";
-import axios from "axios";
-import { useEffect, useState } from "react";
-import "./Tab2.css";
-import { IonButton } from "@ionic/react";
+import "./Wether.css";
 
-const Tab2: React.FC = () => {
+const AddTab: React.FC = () => {
   const [weatherData, setWeatherData] = useState<any>(null);
+  const [cityChoice, setCityChoice] = useState<string>("");
+  const [saveLocation, setSaveLocation] = useState<boolean>(false);
 
   useEffect(() => {
     // Replace 'YOUR_API_KEY' with your actual API key
     const apiKey = "5ad3dc179a0f4a6c89c111130231311";
-    const apiUrl = `http://api.weatherapi.com/v1/current.json?key=5ad3dc179a0f4a6c89c111130231311&q=bern&aqi=no`;
+    const apiUrl = `http://api.weatherapi.com/v1/current.json?key=5ad3dc179a0f4a6c89c111130231311&q=${cityChoice}&aqi=no`;
 
     axios
       .get(apiUrl)
@@ -29,7 +33,7 @@ const Tab2: React.FC = () => {
       .catch((error) => {
         console.error("Error fetching weather data:", error);
       });
-  }, []); // Empty dependency array means this effect runs once after the initial render
+  }, [cityChoice]); // Include cityChoice in the dependency array to re-run the effect when it changes
 
   return (
     <IonPage>
@@ -41,10 +45,17 @@ const Tab2: React.FC = () => {
       <IonContent fullscreen>
         <IonHeader collapse="condense">
           <IonToolbar>
-            <IonTitle size="large">Tab 2</IonTitle>
+            <IonTitle size="large">AddTab</IonTitle>
           </IonToolbar>
         </IonHeader>
-        <ExploreContainer name="Bern" />
+        <IonInput
+          placeholder="Enter city name"
+          value={cityChoice}
+          onIonChange={(e) => setCityChoice(e.detail.value!)}
+        />
+        <IonButton onClick={() => console.log(cityChoice)}>
+          Save City Choice
+        </IonButton>
         {weatherData && (
           <div>
             <h2>Weather Information for {weatherData.location.name}</h2>
@@ -65,4 +76,4 @@ const Tab2: React.FC = () => {
   );
 };
 
-export default Tab2;
+export default AddTab;
