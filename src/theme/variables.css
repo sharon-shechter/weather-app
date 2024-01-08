@@ -191,10 +191,7 @@ http://ionicframework.com/docs/theming/ */
   }
 
 
-  /*
-   * Material Design Dark Theme
-   * -------------------------------------------
-   */
+  
 
   .md body {
     --ion-background-color: #121212;

@@ -1,5 +1,3 @@
-// AddTab.tsx
-
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import {
@@ -10,21 +8,23 @@ import {
   IonToolbar,
   IonInput,
   IonButton,
-  IonToggle,
-  IonLabel,
+  IonIcon,
+  IonSearchbar,
 } from "@ionic/react";
+import { useHistory } from "react-router-dom";
+import { arrowBackOutline } from "ionicons/icons"; // Import the left arrow icon
 import "./Wether.css";
+import HomePage from "./HomePage";
 
 const AddTab: React.FC = () => {
   const [weatherData, setWeatherData] = useState<any>(null);
   const [cityChoice, setCityChoice] = useState<string>("");
-  const [saveLocation, setSaveLocation] = useState<boolean>(false);
+  const history = useHistory();
 
   useEffect(() => {
-    // Replace 'YOUR_API_KEY' with your actual API key
     const apiKey = "5ad3dc179a0f4a6c89c111130231311";
-    const apiUrl = `http://api.weatherapi.com/v1/current.json?key=5ad3dc179a0f4a6c89c111130231311&q=${cityChoice}&aqi=no`;
-
+    const lowercaseCity = cityChoice.toLowerCase();
+    const apiUrl = `http://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${lowercaseCity}&aqi=no`;
     axios
       .get(apiUrl)
       .then((response) => {
@@ -33,7 +33,11 @@ const AddTab: React.FC = () => {
       .catch((error) => {
         console.error("Error fetching weather data:", error);
       });
-  }, [cityChoice]); // Include cityChoice in the dependency array to re-run the effect when it changes
+  }, [cityChoice]);
+
+  const handleGoBack = () => {
+    history.goBack();
+  };
 
   return (
     <IonPage>
@@ -43,19 +47,13 @@ const AddTab: React.FC = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
-        <IonHeader collapse="condense">
-          <IonToolbar>
-            <IonTitle size="large">AddTab</IonTitle>
-          </IonToolbar>
-        </IonHeader>
-        <IonInput
+        {/* Replace IonInput with IonSearchbar */}
+        <IonSearchbar
           placeholder="Enter city name"
           value={cityChoice}
           onIonChange={(e) => setCityChoice(e.detail.value!)}
         />
-        <IonButton onClick={() => console.log(cityChoice)}>
-          Save City Choice
-        </IonButton>
+
         {weatherData && (
           <div>
             <h2>Weather Information for {weatherData.location.name}</h2>
@@ -71,6 +69,15 @@ const AddTab: React.FC = () => {
             )}
           </div>
         )}
+
+        <IonButton
+          expand="full"
+          fill="clear"
+          color="primary"
+          onClick={handleGoBack}
+        >
+          <IonIcon icon={arrowBackOutline} />
+        </IonButton>
       </IonContent>
     </IonPage>
   );

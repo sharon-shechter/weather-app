@@ -1,59 +1,101 @@
+import { useHistory } from "react-router-dom";
+import React, { useState, useEffect } from "react";
 import {
   IonContent,
   IonHeader,
   IonPage,
   IonTitle,
-  IonRouterLink,
   IonToolbar,
+  IonItem,
+  IonList,
+  IonSelect,
+  IonSelectOption,
+  IonText,
 } from "@ionic/react";
-import ExploreContainer from "../components/ExploreContainer";
+import axios from "axios";
 import "./HomePage.css";
-import React from "react";
+import { search } from "ionicons/icons";
 
 const HomePage: React.FC = () => {
+  const [selectedCity, setSelectedCity] = useState<string | undefined>(
+    undefined
+  );
+  const [weatherData, setWeatherData] = useState<any>(null);
+  const history = useHistory();
+
+  const handleCityChange = (event: CustomEvent) => {
+    const selectedValue = event.detail.value;
+    setSelectedCity(selectedValue);
+
+    // Check if the user selected "Search a City"
+    if (selectedValue === "search-city") {
+      // Reset weatherData when searching for a new city
+      setWeatherData(null);
+      // Navigate to the desired tab
+      history.push("/Search");
+    }
+  };
+
+  useEffect(() => {
+    // Fetch weather data when the selected city changes
+    if (selectedCity) {
+      const apiKey = "5ad3dc179a0f4a6c89c111130231311";
+      const apiUrl = `http://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${selectedCity}&aqi=no`;
+
+      axios
+        .get(apiUrl)
+        .then((response) => {
+          setWeatherData(response.data);
+        })
+        .catch((error) => {
+          console.error("Error fetching weather data:", error);
+        });
+    }
+  }, [selectedCity]);
+
   return (
     <IonPage>
       <IonHeader>
-        {" "}
-        <h1>Too Hot To Handle</h1>{" "}
+        <IonToolbar>
+          <IonTitle>Too Hot To Handle</IonTitle>
+        </IonToolbar>
       </IonHeader>
       <IonContent className="ion-padding">
-        <h1>Too Hot To Handle</h1>
-
-        <IonRouterLink href="/Bern">
-          <img
-            src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/Sweden_flag_orb_icon.svg/1200px-Sweden_flag_orb_icon.svg.png"
-            alt="Image 1"
-            className="weather-image"
-          />
-        </IonRouterLink>
-        <IonRouterLink href="/TelAviv">
-          <img
-            src="icions\israel.png"
-            alt="Image 2"
-            className="weather-image"
-          />
-        </IonRouterLink>
-        <IonRouterLink href="/tab4">
-          <img
-            src="https://cdn-icons-png.flaticon.com/512/197/197374.png"
-            alt="Image 3"
-            className="weather-image"
-          />
-        </IonRouterLink>
-        <IonRouterLink href="/tab5">
-          <img src="icions\italy.png" alt="Image 4" className="weather-image" />
-        </IonRouterLink>
-        <IonRouterLink href="/tab6">
-          <img
-            src="icions\netherlands.png"
-            alt="Image 5"
-            className="weather-image"
-          />
-        </IonRouterLink>
-        <IonRouterLink href="/AddTab">
-          <img src="icions\loupe.png" alt="Image 5" className="weather-image" />
-        </IonRouterLink>
+        <IonList>
+          <IonItem>
+            <IonSelect
+              placeholder="Select a City"
+              value={selectedCity}
+              onIonChange={handleCityChange}
+            >
+              <div slot="label">
+                City <IonText color="danger">(Required)</IonText>
+              </div>
+              <IonSelectOption value="new-york">New York</IonSelectOption>
+              <IonSelectOption value="tel-aviv">Tel Aviv</IonSelectOption>
+              <IonSelectOption value="paris">Paris</IonSelectOption>
+              <IonSelectOption value="search-city">
+                Search a City
+              </IonSelectOption>
+            </IonSelect>
+          </IonItem>
+        </IonList>
+        {/* Display weather data */}
+        {selectedCity !== "search-city" && weatherData && (
+          <div>
+            <h2>Weather Information for {weatherData.location.name}</h2>
+            <p>Temperature: {weatherData.current.temp_c}°C</p>
+            <p>Condition: {weatherData.current.condition.text}</p>
+            <p>Wind Speed: {weatherData.current.wind_kph} km/h</p>
+            {weatherData.current.condition.icon && (
+              <img
+                src={`https:${weatherData.current.condition.icon}`}
+                alt="Weather Icon"
+                style={{ maxWidth: "100%", height: "auto" }}
+              />
+            )}
+          </div>
+        )}
       </IonContent>
     </IonPage>
   );

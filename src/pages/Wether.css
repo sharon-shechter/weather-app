@@ -8,7 +8,8 @@ ion-content {
 
 /* Style for the IonHeader */
 ion-header {
-  --ion-background-color: #25455b; /* Set the header background color to a standard blue color */
+  text-align: center;
+  --ion-background-color: #6ab573; /* Set the header background color to a standard blue color */
 }
 
 /* Style for the IonTitle in IonToolbar */

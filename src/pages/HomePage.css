@@ -1,26 +1,40 @@
-/* HomePage.css */
 
-.ion-content {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-  gap: 10px; /* Adjust the gap between grid items */
-  justify-content: center; /* Center the grid items horizontally */
+
+ion-content {
+  --background: url('ihfnlpbze7o01.jpg') 0 0/100% 100% no-repeat;
 }
 
-.weather-image {
-  width: 40%; /* Make the images fill the grid cells */
-  height: auto; /* Maintain the aspect ratio */
-  object-fit: cover; /* Cover the entire container without distortion */
-  border-radius: 8px; /* Add a slight border-radius for a rounded look */
+ion-header {
+  background-color: transparent;
 }
 
-/* Additional styles for better spacing and appearance */
-.ion-padding {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+ion-title {
+  font-size: 1.5em;
+  color: #ffffff; 
 }
 
-h1 {
-  margin-bottom: 20px;
+ion-content {
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 20px;
+  border-radius: 10px;
+  max-width: 400px;
 }
+
+ion-list {
+  margin-top: 20px;
+}
+
+ion-item {
+  border-radius: 8px;
+}
+
+ion-select {
+  width: 100%;
+}
+
+ion-text.color-danger {
+  font-weight: bold;
+  color: #ff0000;
+}
+
+
