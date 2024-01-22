@@ -11,6 +11,10 @@ import {
   IonSelect,
   IonSelectOption,
   IonText,
+  IonMenu,
+  IonButtons,
+  IonMenuButton,
+  IonButton,
 } from "@ionic/react";
 import axios from "axios";
 import "./HomePage.css";
@@ -21,23 +25,20 @@ const HomePage: React.FC = () => {
     undefined
   );
   const [weatherData, setWeatherData] = useState<any>(null);
+
   const history = useHistory();
 
   const handleCityChange = (event: CustomEvent) => {
     const selectedValue = event.detail.value;
     setSelectedCity(selectedValue);
 
-    // Check if the user selected "Search a City"
     if (selectedValue === "search-city") {
-      // Reset weatherData when searching for a new city
       setWeatherData(null);
-      // Navigate to the desired tab
       history.push("/Search");
     }
   };
 
   useEffect(() => {
-    // Fetch weather data when the selected city changes
     if (selectedCity) {
       const apiKey = "5ad3dc179a0f4a6c89c111130231311";
       const apiUrl = `http://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${selectedCity}&aqi=no`;
@@ -53,51 +54,79 @@ const HomePage: React.FC = () => {
     }
   }, [selectedCity]);
 
+  const openWebsite = (url: string) => {
+    window.open(url, "_blank");
+  };
+
   return (
-    <IonPage>
-      <IonHeader>
-        <IonToolbar>
-          <IonTitle>Too Hot To Handle</IonTitle>
-        </IonToolbar>
-      </IonHeader>
-      <IonContent className="ion-padding">
-        <IonList>
-          <IonItem>
-            <IonSelect
-              placeholder="Select a City"
-              value={selectedCity}
-              onIonChange={handleCityChange}
-            >
-              <div slot="label">
-                City <IonText color="danger">(Required)</IonText>
-              </div>
-              <IonSelectOption value="new-york">New York</IonSelectOption>
-              <IonSelectOption value="tel-aviv">Tel Aviv</IonSelectOption>
-              <IonSelectOption value="paris">Paris</IonSelectOption>
-              <IonSelectOption value="search-city">
-                Search a City
-              </IonSelectOption>
-            </IonSelect>
-          </IonItem>
-        </IonList>
-        {/* Display weather data */}
-        {selectedCity !== "search-city" && weatherData && (
-          <div>
-            <h2>Weather Information for {weatherData.location.name}</h2>
-            <p>Temperature: {weatherData.current.temp_c}°C</p>
-            <p>Condition: {weatherData.current.condition.text}</p>
-            <p>Wind Speed: {weatherData.current.wind_kph} km/h</p>
-            {weatherData.current.condition.icon && (
-              <img
-                src={`https:${weatherData.current.condition.icon}`}
-                alt="Weather Icon"
-                style={{ maxWidth: "100%", height: "auto" }}
-              />
-            )}
-          </div>
-        )}
-      </IonContent>
-    </IonPage>
+    <>
+      <IonMenu contentId="main-content">
+        <IonHeader>
+          <IonToolbar color="tertiary">
+            <IonTitle>More then weather</IonTitle>
+          </IonToolbar>
+        </IonHeader>
+        <IonContent className="ion-padding">
+          {/* Add buttons to open websites */}
+          <IonButton
+            expand="full"
+            onClick={() => openWebsite("https://www.un.org/en/climatechange")}
+          >
+            UN Climate Change Website
+          </IonButton>
+          <IonButton
+            expand="full"
+            onClick={() => openWebsite("https://wwf.panda.org/support_wwf/")}
+          >
+            Donate to WWF
+          </IonButton>
+        </IonContent>
+      </IonMenu>
+      <IonPage id="main-content">
+        <IonHeader>
+          <IonToolbar>
+            <IonButtons slot="start">
+              <IonMenuButton />
+            </IonButtons>
+            <IonTitle>Sharon's weather app</IonTitle>
+          </IonToolbar>
+        </IonHeader>
+        <IonContent className="ion-padding">
+          <IonList>
+            <IonItem>
+              <IonSelect
+                placeholder="Select a City"
+                value={selectedCity}
+                onIonChange={handleCityChange}
+              >
+                <IonSelectOption value="new-york">New York</IonSelectOption>
+                <IonSelectOption value="tel-aviv">Tel Aviv</IonSelectOption>
+                <IonSelectOption value="paris">Paris</IonSelectOption>
+                <IonSelectOption value="search-city">
+                  Search a City
+                </IonSelectOption>
+              </IonSelect>
+            </IonItem>
+          </IonList>
+
+          {selectedCity !== "search-city" && weatherData && (
+            <div>
+              <h2>Weather Information for {weatherData.location.name}</h2>
+              <p>Temperature: {weatherData.current.temp_c}°C</p>
+              <p>Condition: {weatherData.current.condition.text}</p>
+              <p>Wind Speed: {weatherData.current.wind_kph} km/h</p>
+              {weatherData.current.condition.icon && (
+                <img
+                  src={`https:${weatherData.current.condition.icon}`}
+                  alt="Weather Icon"
+                  style={{ maxWidth: "100%", height: "auto" }}
+                />
+              )}
+            </div>
+          )}
+        </IonContent>
+      </IonPage>
+    </>
   );
 };
 

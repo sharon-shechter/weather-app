@@ -10,19 +10,23 @@ import {
   IonButton,
   IonIcon,
   IonSearchbar,
+  IonCheckbox,
+  IonLabel,
 } from "@ionic/react";
 import { useHistory } from "react-router-dom";
 import { arrowBackOutline } from "ionicons/icons"; // Import the left arrow icon
 import "./Wether.css";
 import HomePage from "./HomePage";
 
-const AddTab: React.FC = () => {
+const Search: React.FC = () => {
   const [weatherData, setWeatherData] = useState<any>(null);
   const [cityChoice, setCityChoice] = useState<string>("");
+  const [isFahrenheit, setIsFahrenheit] = useState<boolean>(false); // New state for Fahrenheit
   const history = useHistory();
 
   useEffect(() => {
     const apiKey = "5ad3dc179a0f4a6c89c111130231311";
+    const unit = isFahrenheit ? "imperial" : "metric";
     const lowercaseCity = cityChoice.toLowerCase();
     const apiUrl = `http://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${lowercaseCity}&aqi=no`;
     axios
@@ -33,7 +37,7 @@ const AddTab: React.FC = () => {
       .catch((error) => {
         console.error("Error fetching weather data:", error);
       });
-  }, [cityChoice]);
+  }, [cityChoice, isFahrenheit]);
 
   const handleGoBack = () => {
     history.goBack();
@@ -43,11 +47,10 @@ const AddTab: React.FC = () => {
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>Too Hot To Handle</IonTitle>
+          <IonTitle>Sharon's weather app</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
-        {/* Replace IonInput with IonSearchbar */}
         <IonSearchbar
           placeholder="Enter city name"
           value={cityChoice}
@@ -57,7 +60,12 @@ const AddTab: React.FC = () => {
         {weatherData && (
           <div>
             <h2>Weather Information for {weatherData.location.name}</h2>
-            <p>Temperature: {weatherData.current.temp_c}°C</p>
+            <p>
+              Temperature:{" "}
+              {isFahrenheit
+                ? `${weatherData.current.temp_f}°F`
+                : `${weatherData.current.temp_c}°C`}
+            </p>
             <p>Condition: {weatherData.current.condition.text}</p>
             <p>Wind Speed: {weatherData.current.wind_kph} km/h</p>
             {weatherData.current.condition.icon && (
@@ -78,9 +86,16 @@ const AddTab: React.FC = () => {
         >
           <IonIcon icon={arrowBackOutline} />
         </IonButton>
+
+        {/* Checkbox for Fahrenheit/Celsius */}
+        <IonCheckbox
+          checked={isFahrenheit}
+          onIonChange={(e) => setIsFahrenheit(e.detail.checked)}
+        />
+        <IonLabel>Show in Fahrenheit</IonLabel>
       </IonContent>
     </IonPage>
   );
 };
 
-export default AddTab;
+export default Search;

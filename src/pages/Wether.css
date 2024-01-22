@@ -48,3 +48,6 @@ ion-router-link {
 ion-router-link:hover {
   color: #2980b9; /* Change the link color on hover */
 }
+ion-icon {
+  color: rgb(226, 0, 0);
+}
