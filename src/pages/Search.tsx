@@ -25,7 +25,7 @@ const Search: React.FC = () => {
   const history = useHistory();
 
   useEffect(() => {
-    const apiKey = "5ad3dc179a0f4a6c89c111130231311";
+    const apiKey = "your_api_key_here";
     const unit = isFahrenheit ? "imperial" : "metric";
     const lowercaseCity = cityChoice.toLowerCase();
     const apiUrl = `http://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${lowercaseCity}&aqi=no`;

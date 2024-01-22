@@ -40,7 +40,7 @@ const HomePage: React.FC = () => {
 
   useEffect(() => {
     if (selectedCity) {
-      const apiKey = "5ad3dc179a0f4a6c89c111130231311";
+      const apiKey = "your_api_key_here";
       const apiUrl = `http://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${selectedCity}&aqi=no`;
 
       axios
